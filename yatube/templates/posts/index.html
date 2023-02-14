@@ -1,0 +1,55 @@
+<!-- templates/posts/index.html -->
+<!DOCTYPE html> 
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<head>
+  <style>
+    .entry {
+      border-bottom: 3px solid #666; padding: 0 0 15px 0;
+      margin-bottom: 8px;
+    }
+    .button {
+      font-family: ‘Droid serif’, serif; background: #b48608;
+      padding: 2px 8px; color: #000; text-decoration: none; margin: 0 auto;
+      width: 100%; width: 180px; margin: 0 auto; display: block;
+      text-align: center; font-style: italic;
+    }
+    .read {
+      background-color: #605833; border-radius: 5px 5px 5px 5px;
+      color: white; float: right; font-family: ‘Droid serif’, serif;
+      text-transform: lowercase; font-size: 18px; padding: 3px 15px;
+    }
+  </style>
+</head>
+
+{% for post in posts %}
+<div class="container py-5">
+
+  <h1 style="color: #72525c">Недавно добавлено</h1>
+
+  <article>
+    <ul>
+      <li>
+        Автор: {{ post.author.get_full_name }}
+      </li>
+      <li class=entry>
+        Дата публикации: {{ post.pub_date|date:"d E Y" }}
+      </li>
+    </ul>
+    
+    <p>
+      {{ post.text }}
+    </p>
+    
+    {% if post.group %}   
+      <a class="read" href="{% url 'posts:group_posts' post.group.slug %}">
+      все записи группы</a>
+    {% endif %}
+  </article>
+</div>
+{% endfor %} 
+{% endblock %}
+
